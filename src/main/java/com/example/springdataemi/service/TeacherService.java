@@ -26,7 +26,7 @@ public class TeacherService {
     public Teacher getTeacherById(Long teacherId) {
         return teacherRepository.findById(teacherId).get();
     }
-    public Teacher getTeacherByIsd(Long teacherId) {
+    public Teacher getTeacherByIds(Long teacherId) {
         Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
         return optionalTeacher.orElse(null);
     }
