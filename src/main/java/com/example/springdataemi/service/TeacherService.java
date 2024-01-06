@@ -14,10 +14,13 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
 
+
     @Autowired
     public TeacherService(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
+
+
 
     public List<Teacher> getAllTeachers() {
         return teacherRepository.findAll();
@@ -26,6 +29,8 @@ public class TeacherService {
     public Teacher getTeacherById(Long teacherId) {
         return teacherRepository.findById(teacherId).get();
     }
+
+
     public Teacher getTeacherByIds(Long teacherId) {
         Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
         return optionalTeacher.orElse(null);
@@ -43,6 +48,7 @@ public class TeacherService {
             return teacherRepository.save(existingTeacher);
         } else {
             throw new NoSuchElementException("Teacher not found with id: " + teacherId);
+
         }
     }
 
@@ -61,6 +67,7 @@ public class TeacherService {
             return teacherRepository.save(teacher);
         } else {
             throw new EntityNotFoundException("Teacher not found with ID: " + teacherId);
+
         }
     }
 

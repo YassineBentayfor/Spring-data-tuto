@@ -14,6 +14,7 @@ import java.util.Optional;
 public class CourseService {
     private final CourseRepository courseRepository;
 
+
     @Autowired
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
@@ -29,6 +30,8 @@ public class CourseService {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
         return optionalCourse.orElse(null); // Return null if course is not found
     }
+
+
 
     public Course createCourse(Course newCourse) {
         return courseRepository.save(newCourse);

@@ -67,14 +67,14 @@ public class StudentService {
             Course course = optionalCourse.get();
 
             List<Student> studentsInCourse = course.getStudents();
-//           if (!studentsInCourse.contains(student)) {
+           if (!studentsInCourse.contains(student)) {
                 studentsInCourse.add(student);
                 course.setStudents(studentsInCourse);
                 courseRepository.save(course);
-/*            } else {
+            } else {
 
               throw new IllegalStateException("Student is already assigned to this course");
-            }*/
+            }
 
         } else {
             throw new IllegalArgumentException("Student or Course not found");
