@@ -40,6 +40,6 @@ class CourseMaterialRepositoryTest {
                 CourseMaterialrepository.findAll();
 
         System.out.println("courseMaterials = " + courseMaterials);
-        System.out.println(courseMaterials.get(1).getCourse());
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.springdataemi.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +22,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
 
-/*    @OneToMany(
+   /* @OneToMany(
             cascade = CascadeType.ALL
     )
     @JoinColumn(
@@ -29,4 +30,9 @@ public class Teacher {
             referencedColumnName = "teacherId"
     )
     private List<Course> courses;*/
+
+
+    @OneToMany(mappedBy = "teacher")
+    @JsonManagedReference
+    private List<Course> courses;
 }

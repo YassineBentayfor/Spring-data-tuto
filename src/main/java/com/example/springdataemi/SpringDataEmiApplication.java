@@ -1,16 +1,11 @@
 package com.example.springdataemi;
 
-import com.example.springdataemi.entity.CourseMaterial;
-import com.example.springdataemi.entity.Student;
-import com.example.springdataemi.repository.CourseMaterialRepository;
 import com.example.springdataemi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 @SpringBootApplication
 public class SpringDataEmiApplication {
@@ -29,7 +24,7 @@ public class SpringDataEmiApplication {
     @Bean
     CommandLineRunner coucou() {
         return args -> {
- /*           Student student = Student.builder()
+ /*           Student_ST student = Student_ST.builder()
                     .firstName("Yassine")
                     .lastName("Bentayfor")
                     .emailId("yassine@gmail.com")

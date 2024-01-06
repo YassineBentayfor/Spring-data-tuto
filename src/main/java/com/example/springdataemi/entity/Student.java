@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Data
@@ -25,7 +24,6 @@ public class Student {
     @SequenceGenerator(
             name = "student_sequence",
             sequenceName = "student_sequence",
-            initialValue = 20,
             allocationSize = 1
 
     )

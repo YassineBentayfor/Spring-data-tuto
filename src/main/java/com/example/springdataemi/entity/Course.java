@@ -1,5 +1,7 @@
 package com.example.springdataemi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,23 +28,25 @@ public class Course {
     @OneToOne(
             mappedBy = "course"
     )
+    @JsonIgnore
     private CourseMaterial courseMaterial;
 
 
 
-    @ManyToOne(
-            cascade = CascadeType.ALL
-    )
+    @ManyToOne
     @JoinColumn(
             name = "teacher_id",
             referencedColumnName = "teacherId"
     )
+    @JsonBackReference
+    //@JsonIgnore
     private Teacher teacher;
 
 
-    @ManyToMany(
-            cascade = CascadeType.ALL
-    )
+
+
+
+    @ManyToMany//(cascade = CascadeType.ALL)
     @JoinTable(
             name = "studen_course_map",
             joinColumns = @JoinColumn(
@@ -55,6 +59,15 @@ public class Course {
             )
     )
     private List<Student> students;
+
+
+
+
+
+ /*   @ElementCollection
+    private List<String> yassine;
+*/
+
     public void addStudents(Student student){
         if(students == null) students = new ArrayList<>();
         students.add(student);

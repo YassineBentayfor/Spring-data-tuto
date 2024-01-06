@@ -16,7 +16,7 @@ public class CourseMaterial {
     private Long courseMaterialId;
     private String url;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(
             name = "course_id",
             referencedColumnName = "courseId"

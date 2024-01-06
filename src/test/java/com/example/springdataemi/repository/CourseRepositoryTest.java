@@ -4,7 +4,6 @@ import com.example.springdataemi.entity.Course;
 import com.example.springdataemi.entity.Student;
 import com.example.springdataemi.entity.Teacher;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -13,8 +12,10 @@ import java.util.List;
 
 @SpringBootTest
 class CourseRepositoryTest {
-    @Autowired
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
+    public CourseRepositoryTest(CourseRepository courseRepository) {
+        this.courseRepository =courseRepository;
+    }
 
     @Test
     public void printCourses() {
