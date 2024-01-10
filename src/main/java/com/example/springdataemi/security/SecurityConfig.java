@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -18,36 +20,62 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
+        PasswordEncoder passwordEncoder = passwordEncoder();
+
+        String encodedTeacherPassword = passwordEncoder.encode("teacher1pass");
+        String encodedStudentPassword = passwordEncoder.encode("student1pass");
+        String encodedAdminPassword = passwordEncoder.encode("adminpass");
+
         UserDetails teacher = User.withUsername("teacher")
-                .password("teacher1pass")
+                .password(encodedTeacherPassword)
                 .roles("TEACHER")
                 .build();
         UserDetails student = User.withUsername("student")
-                .password("student1pass")
+                .password(encodedStudentPassword)
                 .roles("STUDENT")
                 .build();
         UserDetails admin = User.withUsername("admin")
-                .password("adminpass")
+                .password(encodedAdminPassword)
                 .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(teacher, student, admin);
     }
 
+
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
                 .authorizeRequests(auth -> {
                     auth.requestMatchers("/").permitAll();
-                        auth.requestMatchers(HttpMethod.GET, "/teachers/**").hasRole("TEACHER");
-                        auth.requestMatchers(HttpMethod.GET, "/students/**").hasRole("STUDENT");
-                        auth.requestMatchers(HttpMethod.GET, "/course-materials/**").hasAnyRole("TEACHER", "STUDENT", "ADMIN");
-                        auth.requestMatchers(HttpMethod.POST, "/students/**").hasRole("ADMIN");
-                        auth.requestMatchers(HttpMethod.DELETE, "/students/**").hasRole("ADMIN");
+
+                    auth.requestMatchers(HttpMethod.GET, "/teachers/**").hasAnyRole("TEACHER", "ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/teachers/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/teachers/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/teachers/**").hasRole( "ADMIN");
+
+                    auth.requestMatchers(HttpMethod.GET, "/students/**").hasAnyRole("STUDENT", "ADMIN", "TEACHER");
+                    auth.requestMatchers(HttpMethod.DELETE, "/students/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/students/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/students/**").hasAnyRole( "ADMIN", "TEACHER");
+
+                    auth.requestMatchers(HttpMethod.GET, "/course-materials/**").hasAnyRole("TEACHER", "STUDENT", "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/course-materials/**").hasRole("TEACHER");
+                    auth.requestMatchers(HttpMethod.DELETE, "/course-materials/**").hasRole("TEACHER");
+                    auth.requestMatchers(HttpMethod.PUT, "/course-materials/**").hasRole("TEACHER");
+
+
                 })
                 .httpBasic(withDefaults())
                 .build();
     }
 
+
+
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
