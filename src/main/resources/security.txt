@@ -1,0 +1,22 @@
+{
+                    auth.requestMatchers("/").permitAll();
+
+                    auth.requestMatchers(HttpMethod.GET, "/teachers/**").hasAnyRole("TEACHER", "ADMIN");
+                    auth.requestMatchers(HttpMethod.DELETE, "/teachers/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/teachers/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/teachers/**").hasRole( "ADMIN");
+
+                    auth.requestMatchers(HttpMethod.GET, "/students/**").hasAnyRole("STUDENT", "ADMIN", "TEACHER");
+                    auth.requestMatchers(HttpMethod.DELETE, "/students/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/students/**").hasRole( "ADMIN");
+                    auth.requestMatchers(HttpMethod.PUT, "/students/**").hasAnyRole( "ADMIN", "TEACHER");
+
+                    auth.requestMatchers(HttpMethod.GET, "/course-materials/**").hasAnyRole("TEACHER", "STUDENT", "ADMIN");
+                    auth.requestMatchers(HttpMethod.POST, "/course-materials/**").hasRole("TEACHER");
+                    auth.requestMatchers(HttpMethod.DELETE, "/course-materials/**").hasRole("TEACHER");
+                    auth.requestMatchers(HttpMethod.PUT, "/course-materials/**").hasRole("TEACHER");
+
+
+                })
+                .httpBasic(withDefaults())
+                .build();
