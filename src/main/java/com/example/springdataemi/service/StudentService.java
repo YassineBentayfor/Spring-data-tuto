@@ -1,8 +1,10 @@
 package com.example.springdataemi.service;
 
+import com.example.springdataemi.entity.Guardian;
 import com.example.springdataemi.entity.Student;
 import com.example.springdataemi.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.springdataemi.entity.Course;
 import com.example.springdataemi.repository.CourseRepository;
@@ -35,8 +37,13 @@ public class StudentService {
     }
 
     public Student createStudent(Student newStudent) {
+        if (newStudent.getGuardian() == null) {
+            System.out.println( "Guardian information is required.");
+            return null;
+        }
         return studentRepository.save(newStudent);
     }
+
 
     public Student updateStudent(Long studentId, Student updatedStudent) {
         if (studentRepository.existsById(studentId)) {

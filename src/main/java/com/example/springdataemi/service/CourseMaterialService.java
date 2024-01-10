@@ -31,7 +31,9 @@ public class CourseMaterialService {
                 .orElseThrow(() -> new IllegalArgumentException("Course Material not found"));
     }
 
-    public CourseMaterial createCourseMaterial(CourseMaterial newCourseMaterial) {
+    public CourseMaterial createCourseMaterial(CourseMaterial newCourseMaterial, Long courseId) {
+        Course course = this.courseRepository.findById(courseId).get();
+        newCourseMaterial.setCourse(course);
         return courseMaterialRepository.save(newCourseMaterial);
     }
 

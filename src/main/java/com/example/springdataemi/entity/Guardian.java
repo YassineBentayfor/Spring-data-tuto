@@ -14,11 +14,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @Embeddable
-@AttributeOverrides({
-        @AttributeOverride(name = "name", column = @Column(name = "guardian_name")),
-        @AttributeOverride(name = "email", column = @Column(name = "guardian_email")),
-        @AttributeOverride(name = "mobile", column = @Column(name = "guardian_mobile"))
-})
 
 
 public class Guardian implements Serializable{

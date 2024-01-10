@@ -8,38 +8,33 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 class CourseMaterialRepositoryTest {
     @Autowired
-    private CourseMaterialRepository CourseMaterialrepository;
+    CourseMaterialRepository courseMaterialRepository;
     @Autowired
-    private CourseRepository courseRepository;
+    CourseRepository courseRepository;
+
+
 
     @Test
     public void SaveCourseMaterial() {
-        Course course =
-                Course.builder()
-                        .title(".net")
-                        .credit(6)
-                        .build();
-
-        CourseMaterial courseMaterial =
-                CourseMaterial.builder()
-                        .url("www.google.com")
-                        .course(course)
-                        .build();
-
+        Course course = new Course(".net", 6);
+        CourseMaterial courseMaterial = new CourseMaterial("www.google.com", course);
         courseRepository.save(course);
-        CourseMaterialrepository.save(courseMaterial);
+        courseMaterialRepository.save(courseMaterial);
     }
 
     @Test
     public void printAllCourseMaterials() {
         List<CourseMaterial> courseMaterials =
-                CourseMaterialrepository.findAll();
+                courseMaterialRepository.findAll();
 
         System.out.println("courseMaterials = " + courseMaterials);
 
     }
+
 }

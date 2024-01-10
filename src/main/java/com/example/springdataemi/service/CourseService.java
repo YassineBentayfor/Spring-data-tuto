@@ -28,7 +28,7 @@ public class CourseService {
 
     public Course getCourseById(Long courseId) {
         Optional<Course> optionalCourse = courseRepository.findById(courseId);
-        return optionalCourse.orElse(null); // Return null if course is not found
+        return optionalCourse.orElse(null);
     }
 
 
@@ -38,35 +38,25 @@ public class CourseService {
     }
 
     public Course updateCourse(Long courseId, Course updatedCourse) {
-        Course existingCourse = getCourseById(courseId);
-        existingCourse.setTitle(updatedCourse.getTitle());
-        existingCourse.setCredit(updatedCourse.getCredit());
-        existingCourse.setCourseMaterial(updatedCourse.getCourseMaterial());
-        //existingCourse.setTeacher(updatedCourse.getTeacher());
-        existingCourse.setStudents(updatedCourse.getStudents());
-        return courseRepository.save(existingCourse);
+        //ICI la methode save ecrase l'enregistrement et ne fait pas un update
+        // Je n'ai pas trouvé le saveOrUpdate dans Jpa
+        updatedCourse.setCourseId(courseId);
+        return courseRepository.save(updatedCourse);
     }
 
     public Course partiallyUpdateCourse(Long courseId, Map<String, Object> updates) {
         Course existingCourse = getCourseById(courseId);
-
         if (updates.containsKey("title")) {
             existingCourse.setTitle((String) updates.get("title"));
         }
         if (updates.containsKey("credit")) {
             existingCourse.setCredit((Integer) updates.get("credit"));
         }
-
-
         return courseRepository.save(existingCourse);
     }
 
     public void deleteCourse(Long courseId) {
-        if (courseRepository.existsById(courseId)) {
-            courseRepository.deleteById(courseId);
-        } else {
-            System.out.println("Course not found with id: " + courseId);
-        }
+        courseRepository.deleteById(courseId);
     }
 
 

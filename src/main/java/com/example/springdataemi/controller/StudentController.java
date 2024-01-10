@@ -1,6 +1,7 @@
 package com.example.springdataemi.controller;
 
 import com.example.springdataemi.entity.Course;
+import com.example.springdataemi.entity.Guardian;
 import com.example.springdataemi.entity.Student;
 import com.example.springdataemi.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class StudentController {
 
     @PostMapping
     public Student createStudent(@RequestBody Student newStudent) {
+
         return studentService.createStudent(newStudent);
     }
 

@@ -29,9 +29,9 @@ public class CourseMaterialController {
         return courseMaterialService.getCourseMaterialById(courseMaterialId);
     }
 
-    @PostMapping
-    public CourseMaterial createCourseMaterial(@RequestBody CourseMaterial newCourseMaterial) {
-        return courseMaterialService.createCourseMaterial(newCourseMaterial);
+    @PostMapping("course/{id}")
+    public CourseMaterial createCourseMaterial(@RequestBody CourseMaterial newCourseMaterial, @PathVariable("id") Long courseId) {
+        return courseMaterialService.createCourseMaterial(newCourseMaterial, courseId);
     }
 
     @PutMapping("/{id}")

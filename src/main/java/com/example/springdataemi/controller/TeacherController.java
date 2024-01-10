@@ -41,11 +41,6 @@ public class TeacherController {
         return teacherService.createTeacher(newTeacher);
     }
 
-   /* @PostMapping("/{teacherId}/courses")
-    public Teacher assignCourseToTeacher(@PathVariable("teacherId") Long teacherId, @RequestBody Course newCourse) {
-        Course savedCourse = courseService.createCourse(newCourse);
-        return teacherService.assignCourseToTeacher(teacherId, savedCourse);
-    }*/
 
     @PostMapping("/{teacherId}/courses/{courseId}")
     public ResponseEntity<String> assignCourseToTeacher(
